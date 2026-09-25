@@ -4,6 +4,15 @@ All notable changes to this project are documented in this file.
 
 ## [Unreleased]
 
+## [1.0.1] - 2026-09-25
+
+### Added
+
+- Self-hosted brand icon under `custom_components/calendar_share/brand/`
+  (missing from the v1.0.0 release, which predates it).
+
+## [1.0.0] - 2026-09-25
+
 ### Added
 
 - Initial scaffold: config flow (add/options/regenerate token), HTTP view

@@ -16,16 +16,11 @@ jobs:
       - uses: home-assistant/actions/hassfest@master
 
   # hacs/action runs the same checks HACS uses to review a submission to
-  # its default (official) store. Installing via "HACS > Custom
-  # repositories" does not require these to pass. The "brands" check in
-  # particular only passes once icons are submitted to
-  # home-assistant/brands, which only matters if/when this repository is
-  # submitted to the default store - so it is allowed to fail here.
+  # its default (official) store.
   hacs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
       - uses: hacs/action@main
-        continue-on-error: true
         with:
           category: integration
