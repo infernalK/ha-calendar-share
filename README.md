@@ -9,7 +9,7 @@ Security is provided by a long, server-generated, per-flow **token in the URL** 
 ## What it does
 
 - Pick one calendar entity (e.g. `calendar.skolengo_child1`) → get one unguessable URL:
-  `https://<your-ha>/api/calendar_share/<flow_id>?token=<token>`
+  `https://<your-ha>/api/calendar_share/<token>`
 - Add multiple independent flows (one per child, per calendar) — each with its own token, each revocable/regeneratable on its own.
 - Read-only: the endpoint only ever calls `calendar.get_events` internally. It cannot create, edit, or delete anything.
 - A diagnostic sensor per flow shows the last time the feed was fetched and how many events it currently exposes.

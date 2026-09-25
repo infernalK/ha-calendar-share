@@ -14,7 +14,7 @@ MAX_DAYS_AHEAD = 365
 
 TOKEN_BYTES = 32
 
-API_URL_PATTERN = "/api/calendar_share/{entry_id}"
+API_URL_PATTERN = "/api/calendar_share/{token}"
 
 ATTR_LAST_ACCESSED = "last_accessed"
 ATTR_EVENT_COUNT = "event_count"

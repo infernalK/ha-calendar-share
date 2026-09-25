@@ -29,13 +29,13 @@ from .const import (
 )
 
 
-def _build_share_url(hass: HomeAssistant, entry_id: str, token: str) -> str:
+def _build_share_url(hass: HomeAssistant, token: str) -> str:
     try:
         base_url = get_url(hass, prefer_external=True, allow_internal=False)
     except NoURLAvailableError:
         base_url = get_url(hass)
-    path = API_URL_PATTERN.format(entry_id=entry_id)
-    return f"{base_url}{path}?token={token}"
+    path = API_URL_PATTERN.format(token=token)
+    return f"{base_url}{path}"
 
 
 class CalendarShareConfigFlow(ConfigFlow, domain=DOMAIN):
@@ -97,7 +97,7 @@ class CalendarShareConfigFlow(ConfigFlow, domain=DOMAIN):
                 options={CONF_DAYS_AHEAD: DEFAULT_DAYS_AHEAD},
             )
 
-        share_url = _build_share_url(self.hass, self.flow_id, self._token)
+        share_url = _build_share_url(self.hass, self._token)
         return self.async_show_form(
             step_id="confirm",
             data_schema=vol.Schema({}),
@@ -157,7 +157,7 @@ class CalendarShareOptionsFlow(OptionsFlow):
             return self.async_create_entry(title="", data=self._pending_options)
 
         token = self.config_entry.data[CONF_TOKEN]
-        share_url = _build_share_url(self.hass, self.config_entry.entry_id, token)
+        share_url = _build_share_url(self.hass, token)
         return self.async_show_form(
             step_id="show_new_token",
             data_schema=vol.Schema({}),
