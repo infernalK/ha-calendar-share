@@ -10,10 +10,12 @@ from custom_components.calendar_share.const import (
     CONF_CALENDAR_ENTITY_ID,
     CONF_DAYS_AHEAD,
     CONF_DAYS_BEHIND,
+    CONF_FULL_CALENDAR,
     CONF_REGENERATE_TOKEN,
     CONF_TOKEN,
     DEFAULT_DAYS_AHEAD,
     DEFAULT_DAYS_BEHIND,
+    DEFAULT_FULL_CALENDAR,
     DOMAIN,
 )
 
@@ -58,6 +60,7 @@ async def test_full_flow_creates_entry_with_token_and_shows_url(
     assert len(result["data"][CONF_TOKEN]) > 20
     assert result["options"][CONF_DAYS_AHEAD] == DEFAULT_DAYS_AHEAD
     assert result["options"][CONF_DAYS_BEHIND] == DEFAULT_DAYS_BEHIND
+    assert result["options"][CONF_FULL_CALENDAR] == DEFAULT_FULL_CALENDAR
 
 
 async def test_two_flows_for_same_calendar_get_different_tokens(
@@ -107,6 +110,7 @@ async def test_regenerate_token_invalidates_old_token(hass, mock_calendar_state)
         options_result = await hass.config_entries.options.async_configure(
             options_result["flow_id"],
             {
+                CONF_FULL_CALENDAR: False,
                 CONF_DAYS_AHEAD: 30,
                 CONF_DAYS_BEHIND: 30,
                 CONF_REGENERATE_TOKEN: True,
@@ -117,3 +121,35 @@ async def test_regenerate_token_invalidates_old_token(hass, mock_calendar_state)
     assert options_result["step_id"] == "show_new_token"
     new_token = entry.data[CONF_TOKEN]
     assert new_token != old_token
+
+
+async def test_full_calendar_option_can_be_enabled(hass, mock_calendar_state):
+    with patch(
+        "custom_components.calendar_share.config_flow.get_url",
+        return_value="https://ha.example.com",
+    ):
+        result = await hass.config_entries.flow.async_init(
+            DOMAIN, context={"source": config_entries.SOURCE_USER}
+        )
+        result = await hass.config_entries.flow.async_configure(
+            result["flow_id"], {CONF_CALENDAR_ENTITY_ID: mock_calendar_state}
+        )
+        result = await hass.config_entries.flow.async_configure(
+            result["flow_id"], {}
+        )
+        entry = hass.config_entries.async_entries(DOMAIN)[0]
+
+        options_result = await hass.config_entries.options.async_init(
+            entry.entry_id
+        )
+        options_result = await hass.config_entries.options.async_configure(
+            options_result["flow_id"],
+            {
+                CONF_FULL_CALENDAR: True,
+                CONF_DAYS_AHEAD: 30,
+                CONF_DAYS_BEHIND: 30,
+            },
+        )
+
+    assert options_result["type"] == FlowResultType.CREATE_ENTRY
+    assert entry.options[CONF_FULL_CALENDAR] is True

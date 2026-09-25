@@ -26,7 +26,8 @@ Security is provided by a long, server-generated, per-flow **token in the URL** 
 
 By default a flow exposes **~13 months behind and ~13 months ahead** of today — wide enough that a school-year-bound calendar (or anything similar) shows up in full without touching these:
 
-- **Days ahead** / **Days behind**: narrow the window if you'd rather not expose the whole thing (e.g. a large personal calendar, or a privacy preference), up to 10 years in either direction.
+- **Full calendar**: share everything the calendar entity has, past and future (a ~100-year span either way), ignoring the day counts below entirely.
+- **Days ahead** / **Days behind**: when "Full calendar" is off, narrow the window if you'd rather not expose the whole thing (e.g. a large personal calendar, or a privacy preference), up to 10 years in either direction.
 - **Regenerate token**: invalidates the current URL immediately and shows the new one once. Update your calendar subscription afterward.
 
 ## Security notes

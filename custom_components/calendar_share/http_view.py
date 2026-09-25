@@ -30,10 +30,13 @@ from .const import (
     CONF_CALENDAR_ENTITY_ID,
     CONF_DAYS_AHEAD,
     CONF_DAYS_BEHIND,
+    CONF_FULL_CALENDAR,
     CONF_TOKEN,
     DEFAULT_DAYS_AHEAD,
     DEFAULT_DAYS_BEHIND,
+    DEFAULT_FULL_CALENDAR,
     DOMAIN,
+    FULL_CALENDAR_YEARS,
     SIGNAL_FLOW_ACCESSED,
 )
 
@@ -68,8 +71,12 @@ class CalendarShareView(HomeAssistantView):
 
         entry_id = entry.entry_id
         entity_id: str = entry.data[CONF_CALENDAR_ENTITY_ID]
-        days_ahead: int = entry.options.get(CONF_DAYS_AHEAD, DEFAULT_DAYS_AHEAD)
-        days_behind: int = entry.options.get(CONF_DAYS_BEHIND, DEFAULT_DAYS_BEHIND)
+
+        if entry.options.get(CONF_FULL_CALENDAR, DEFAULT_FULL_CALENDAR):
+            days_ahead = days_behind = 365 * FULL_CALENDAR_YEARS
+        else:
+            days_ahead = entry.options.get(CONF_DAYS_AHEAD, DEFAULT_DAYS_AHEAD)
+            days_behind = entry.options.get(CONF_DAYS_BEHIND, DEFAULT_DAYS_BEHIND)
 
         events = await self._async_get_events(entity_id, days_ahead, days_behind)
         ics_body = self._build_ics(entity_id, events)

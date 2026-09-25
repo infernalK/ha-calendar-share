@@ -22,7 +22,9 @@
     "step": {
       "init": {
         "title": "Options du flux de partage",
+        "description": "Quand \"Calendrier complet\" est activé, tout le calendrier est partagé et les nombres de jours ci-dessous sont ignorés.",
         "data": {
+          "full_calendar": "Calendrier complet (ignore les nombres de jours ci-dessous, partage tout)",
           "days_ahead": "Nombre de jours à venir à inclure dans le flux",
           "days_behind": "Nombre de jours passés à inclure dans le flux",
           "regenerate_token": "Régénérer le jeton de partage (invalide immédiatement l'URL actuelle)"

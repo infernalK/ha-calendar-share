@@ -22,7 +22,9 @@
     "step": {
       "init": {
         "title": "Calendar share options",
+        "description": "When \"Full calendar\" is on, the whole calendar is shared and the day counts below are ignored.",
         "data": {
+          "full_calendar": "Full calendar (ignore the day counts below, share everything)",
           "days_ahead": "Days ahead to include in the feed",
           "days_behind": "Days in the past to include in the feed",
           "regenerate_token": "Regenerate the share token (invalidates the current URL immediately)"

@@ -7,6 +7,7 @@ CONF_CALENDAR_ENTITY_ID = "calendar_entity_id"
 CONF_TOKEN = "token"
 CONF_DAYS_AHEAD = "days_ahead"
 CONF_DAYS_BEHIND = "days_behind"
+CONF_FULL_CALENDAR = "full_calendar"
 CONF_REGENERATE_TOKEN = "regenerate_token"
 
 # Wide enough that a school-year-bound calendar (or anything similar) is
@@ -21,6 +22,14 @@ MIN_DAYS_AHEAD = 0
 MAX_DAYS_AHEAD = 3650
 MIN_DAYS_BEHIND = 0
 MAX_DAYS_BEHIND = 3650
+DEFAULT_FULL_CALENDAR = False
+
+# Used instead of days_ahead/days_behind when full_calendar is on. A fixed,
+# generous span rather than a truly unbounded query: calendar.get_events
+# still needs concrete start/end bounds, and some calendar backends handle
+# an open-ended request (or one spanning centuries) poorly. 100 years
+# either side covers any real calendar's actual event range.
+FULL_CALENDAR_YEARS = 100
 
 TOKEN_BYTES = 32
 

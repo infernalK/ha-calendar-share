@@ -20,10 +20,12 @@ from .const import (
     CONF_CALENDAR_ENTITY_ID,
     CONF_DAYS_AHEAD,
     CONF_DAYS_BEHIND,
+    CONF_FULL_CALENDAR,
     CONF_REGENERATE_TOKEN,
     CONF_TOKEN,
     DEFAULT_DAYS_AHEAD,
     DEFAULT_DAYS_BEHIND,
+    DEFAULT_FULL_CALENDAR,
     DOMAIN,
     MAX_DAYS_AHEAD,
     MAX_DAYS_BEHIND,
@@ -101,6 +103,7 @@ class CalendarShareConfigFlow(ConfigFlow, domain=DOMAIN):
                 options={
                     CONF_DAYS_AHEAD: DEFAULT_DAYS_AHEAD,
                     CONF_DAYS_BEHIND: DEFAULT_DAYS_BEHIND,
+                    CONF_FULL_CALENDAR: DEFAULT_FULL_CALENDAR,
                 },
             )
 
@@ -144,6 +147,12 @@ class CalendarShareOptionsFlow(OptionsFlow):
 
         schema = vol.Schema(
             {
+                vol.Required(
+                    CONF_FULL_CALENDAR,
+                    default=self.config_entry.options.get(
+                        CONF_FULL_CALENDAR, DEFAULT_FULL_CALENDAR
+                    ),
+                ): bool,
                 vol.Required(
                     CONF_DAYS_AHEAD,
                     default=self.config_entry.options.get(

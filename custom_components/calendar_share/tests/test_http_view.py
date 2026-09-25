@@ -12,11 +12,16 @@ from custom_components.calendar_share.http_view import CalendarShareView
 
 class _FakeEntry:
     def __init__(
-        self, entry_id: str, entity_id: str, token: str, days_ahead: int = 30
+        self,
+        entry_id: str,
+        entity_id: str,
+        token: str,
+        days_ahead: int = 30,
+        full_calendar: bool = False,
     ) -> None:
         self.entry_id = entry_id
         self.data = {"calendar_entity_id": entity_id, "token": token}
-        self.options = {"days_ahead": days_ahead}
+        self.options = {"days_ahead": days_ahead, "full_calendar": full_calendar}
 
 
 def _make_request() -> MagicMock:
@@ -106,6 +111,47 @@ async def test_correct_token_picks_the_matching_flow_among_several(hass):
     view = CalendarShareView(hass)
     response = await view.get(_make_request(), "token-two")
     assert response.status == 200
+
+
+@pytest.mark.asyncio
+async def test_full_calendar_ignores_narrow_day_counts(hass):
+    hass.data[DOMAIN] = {
+        "entry1": {
+            "entry": _FakeEntry(
+                "entry1",
+                "calendar.foo",
+                "correct-token",
+                days_ahead=1,
+                full_calendar=True,
+            )
+        }
+    }
+
+    seen_ranges: list[tuple[str, str]] = []
+
+    async def fake_get_events(call: ServiceCall) -> dict:
+        seen_ranges.append(
+            (call.data["start_date_time"], call.data["end_date_time"])
+        )
+        return {"calendar.foo": {"events": []}}
+
+    hass.services.async_register(
+        "calendar",
+        "get_events",
+        fake_get_events,
+        supports_response=SupportsResponse.ONLY,
+    )
+
+    view = CalendarShareView(hass)
+    response = await view.get(_make_request(), "correct-token")
+
+    assert response.status == 200
+    start, end = seen_ranges[0]
+    # full_calendar spans ~100 years either way, far wider than the
+    # days_ahead=1 the entry also has configured -- proving that option
+    # is ignored while full_calendar is on.
+    assert int(start[:4]) < 2000
+    assert int(end[:4]) > 2100
 
 
 @pytest.mark.asyncio
