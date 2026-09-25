@@ -11,10 +11,11 @@ from __future__ import annotations
 import hashlib
 import logging
 import secrets
-from datetime import datetime, timedelta
+from datetime import date, datetime, timedelta
+from typing import Any
 
 from aiohttp import web
-from homeassistant.components.http import HomeAssistantView
+from homeassistant.components.http.view import HomeAssistantView
 from homeassistant.core import HomeAssistant
 from homeassistant.helpers.dispatcher import async_dispatcher_send
 from homeassistant.util import dt as dt_util
@@ -86,7 +87,7 @@ class CalendarShareView(HomeAssistantView):
 
     async def _async_get_events(
         self, entity_id: str, days_ahead: int
-    ) -> list[dict]:
+    ) -> list[dict[str, Any]]:
         now = dt_util.now()
         start = now - timedelta(days=1)
         end = now + timedelta(days=days_ahead)
@@ -102,10 +103,12 @@ class CalendarShareView(HomeAssistantView):
             blocking=True,
             return_response=True,
         )
-        return response.get(entity_id, {}).get("events", [])
+        calendar_result: dict[str, Any] = (response or {}).get(entity_id, {})
+        events: list[dict[str, Any]] = calendar_result.get("events", [])
+        return events
 
     @staticmethod
-    def _build_ics(entity_id: str, events: list[dict]) -> bytes:
+    def _build_ics(entity_id: str, events: list[dict[str, Any]]) -> bytes:
         calendar = Calendar()
         calendar.add("prodid", "-//Calendar Share//Home Assistant//EN")
         calendar.add("version", "2.0")
@@ -115,10 +118,10 @@ class CalendarShareView(HomeAssistantView):
         for event in events:
             calendar.add_component(_event_to_vevent(entity_id, event))
 
-        return calendar.to_ical()
+        return bytes(calendar.to_ical())
 
 
-def _event_to_vevent(entity_id: str, event: dict) -> Event:
+def _event_to_vevent(entity_id: str, event: dict[str, Any]) -> Event:
     """Convert a calendar.get_events event dict into an icalendar Event."""
     vevent = Event()
 
@@ -141,7 +144,7 @@ def _event_to_vevent(entity_id: str, event: dict) -> Event:
     return vevent
 
 
-def _parse_event_datetime(value: str):
+def _parse_event_datetime(value: str) -> date | datetime:
     """Return a date for all-day events, or a tz-aware datetime otherwise."""
     if len(value) == 10:
         return datetime.strptime(value, "%Y-%m-%d").date()

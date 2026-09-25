@@ -6,7 +6,7 @@ from typing import Any
 
 import voluptuous as vol
 from homeassistant.config_entries import ConfigEntry, ConfigFlow, OptionsFlow
-from homeassistant.core import callback
+from homeassistant.core import HomeAssistant, callback
 from homeassistant.helpers.network import NoURLAvailableError, get_url
 from homeassistant.helpers.selector import (
     EntitySelector,
@@ -29,7 +29,7 @@ from .const import (
 )
 
 
-def _build_share_url(hass, entry_id: str, token: str) -> str:
+def _build_share_url(hass: HomeAssistant, entry_id: str, token: str) -> str:
     try:
         base_url = get_url(hass, prefer_external=True, allow_internal=False)
     except NoURLAvailableError:
@@ -107,14 +107,17 @@ class CalendarShareConfigFlow(ConfigFlow, domain=DOMAIN):
     @staticmethod
     @callback
     def async_get_options_flow(config_entry: ConfigEntry) -> OptionsFlow:
-        return CalendarShareOptionsFlow(config_entry)
+        return CalendarShareOptionsFlow()
 
 
 class CalendarShareOptionsFlow(OptionsFlow):
-    """Handle options: sliding window and token regeneration."""
+    """Handle options: sliding window and token regeneration.
 
-    def __init__(self, config_entry: ConfigEntry) -> None:
-        self.config_entry = config_entry
+    `self.config_entry` is populated automatically by the base class; it
+    must not be assigned in __init__ (deprecated/removed by HA core).
+    """
+
+    def __init__(self) -> None:
         self._pending_options: dict[str, Any] = {}
 
     async def async_step_init(

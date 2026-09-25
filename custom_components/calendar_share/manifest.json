@@ -3,6 +3,7 @@
   "name": "Calendar Share",
   "codeowners": ["@infernalK"],
   "config_flow": true,
+  "dependencies": ["http"],
   "documentation": "https://github.com/infernalK/ha-calendar-share",
   "issue_tracker": "https://github.com/infernalK/ha-calendar-share/issues",
   "iot_class": "local_polling",
