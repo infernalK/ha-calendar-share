@@ -24,6 +24,7 @@
         "title": "Calendar share options",
         "data": {
           "days_ahead": "Days ahead to include in the feed",
+          "days_behind": "Days in the past to include in the feed",
           "regenerate_token": "Regenerate the share token (invalidates the current URL immediately)"
         }
       },

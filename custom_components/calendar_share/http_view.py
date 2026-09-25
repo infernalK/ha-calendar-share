@@ -29,8 +29,10 @@ from .const import (
     ATTR_LAST_ACCESSED,
     CONF_CALENDAR_ENTITY_ID,
     CONF_DAYS_AHEAD,
+    CONF_DAYS_BEHIND,
     CONF_TOKEN,
     DEFAULT_DAYS_AHEAD,
+    DEFAULT_DAYS_BEHIND,
     DOMAIN,
     SIGNAL_FLOW_ACCESSED,
 )
@@ -67,8 +69,9 @@ class CalendarShareView(HomeAssistantView):
         entry_id = entry.entry_id
         entity_id: str = entry.data[CONF_CALENDAR_ENTITY_ID]
         days_ahead: int = entry.options.get(CONF_DAYS_AHEAD, DEFAULT_DAYS_AHEAD)
+        days_behind: int = entry.options.get(CONF_DAYS_BEHIND, DEFAULT_DAYS_BEHIND)
 
-        events = await self._async_get_events(entity_id, days_ahead)
+        events = await self._async_get_events(entity_id, days_ahead, days_behind)
         ics_body = self._build_ics(entity_id, events)
 
         async_dispatcher_send(
@@ -99,10 +102,10 @@ class CalendarShareView(HomeAssistantView):
         return None
 
     async def _async_get_events(
-        self, entity_id: str, days_ahead: int
+        self, entity_id: str, days_ahead: int, days_behind: int
     ) -> list[dict[str, Any]]:
         now = dt_util.now()
-        start = now - timedelta(days=1)
+        start = now - timedelta(days=days_behind)
         end = now + timedelta(days=days_ahead)
 
         response = await self._hass.services.async_call(

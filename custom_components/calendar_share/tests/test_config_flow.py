@@ -9,8 +9,11 @@ from homeassistant.data_entry_flow import FlowResultType
 from custom_components.calendar_share.const import (
     CONF_CALENDAR_ENTITY_ID,
     CONF_DAYS_AHEAD,
+    CONF_DAYS_BEHIND,
     CONF_REGENERATE_TOKEN,
     CONF_TOKEN,
+    DEFAULT_DAYS_AHEAD,
+    DEFAULT_DAYS_BEHIND,
     DOMAIN,
 )
 
@@ -53,7 +56,8 @@ async def test_full_flow_creates_entry_with_token_and_shows_url(
     assert result["type"] == FlowResultType.CREATE_ENTRY
     assert result["data"][CONF_CALENDAR_ENTITY_ID] == mock_calendar_state
     assert len(result["data"][CONF_TOKEN]) > 20
-    assert result["options"][CONF_DAYS_AHEAD] == 30
+    assert result["options"][CONF_DAYS_AHEAD] == DEFAULT_DAYS_AHEAD
+    assert result["options"][CONF_DAYS_BEHIND] == DEFAULT_DAYS_BEHIND
 
 
 async def test_two_flows_for_same_calendar_get_different_tokens(
@@ -102,7 +106,11 @@ async def test_regenerate_token_invalidates_old_token(hass, mock_calendar_state)
         )
         options_result = await hass.config_entries.options.async_configure(
             options_result["flow_id"],
-            {CONF_DAYS_AHEAD: 30, CONF_REGENERATE_TOKEN: True},
+            {
+                CONF_DAYS_AHEAD: 30,
+                CONF_DAYS_BEHIND: 30,
+                CONF_REGENERATE_TOKEN: True,
+            },
         )
 
     assert options_result["type"] == FlowResultType.FORM

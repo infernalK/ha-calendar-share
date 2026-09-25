@@ -24,6 +24,7 @@
         "title": "Options du flux de partage",
         "data": {
           "days_ahead": "Nombre de jours à venir à inclure dans le flux",
+          "days_behind": "Nombre de jours passés à inclure dans le flux",
           "regenerate_token": "Régénérer le jeton de partage (invalide immédiatement l'URL actuelle)"
         }
       },

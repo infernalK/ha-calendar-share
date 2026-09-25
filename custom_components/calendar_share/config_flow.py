@@ -19,12 +19,16 @@ from .const import (
     API_URL_PATTERN,
     CONF_CALENDAR_ENTITY_ID,
     CONF_DAYS_AHEAD,
+    CONF_DAYS_BEHIND,
     CONF_REGENERATE_TOKEN,
     CONF_TOKEN,
     DEFAULT_DAYS_AHEAD,
+    DEFAULT_DAYS_BEHIND,
     DOMAIN,
     MAX_DAYS_AHEAD,
+    MAX_DAYS_BEHIND,
     MIN_DAYS_AHEAD,
+    MIN_DAYS_BEHIND,
     TOKEN_BYTES,
 )
 
@@ -94,7 +98,10 @@ class CalendarShareConfigFlow(ConfigFlow, domain=DOMAIN):
                     CONF_CALENDAR_ENTITY_ID: self._entity_id,
                     CONF_TOKEN: self._token,
                 },
-                options={CONF_DAYS_AHEAD: DEFAULT_DAYS_AHEAD},
+                options={
+                    CONF_DAYS_AHEAD: DEFAULT_DAYS_AHEAD,
+                    CONF_DAYS_BEHIND: DEFAULT_DAYS_BEHIND,
+                },
             )
 
         share_url = _build_share_url(self.hass, self._token)
@@ -144,6 +151,14 @@ class CalendarShareOptionsFlow(OptionsFlow):
                     ),
                 ): NumberSelector(
                     NumberSelectorConfig(min=MIN_DAYS_AHEAD, max=MAX_DAYS_AHEAD)
+                ),
+                vol.Required(
+                    CONF_DAYS_BEHIND,
+                    default=self.config_entry.options.get(
+                        CONF_DAYS_BEHIND, DEFAULT_DAYS_BEHIND
+                    ),
+                ): NumberSelector(
+                    NumberSelectorConfig(min=MIN_DAYS_BEHIND, max=MAX_DAYS_BEHIND)
                 ),
                 vol.Optional(CONF_REGENERATE_TOKEN, default=False): bool,
             }
