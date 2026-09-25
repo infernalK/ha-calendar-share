@@ -15,7 +15,9 @@ from datetime import date, datetime, timedelta
 from typing import Any
 
 from aiohttp import web
-from homeassistant.components.http.view import HomeAssistantView
+from homeassistant.components.http.view import (  # type: ignore[attr-defined]
+    HomeAssistantView,
+)
 from homeassistant.core import HomeAssistant
 from homeassistant.helpers.dispatcher import async_dispatcher_send
 from homeassistant.util import dt as dt_util
@@ -103,8 +105,12 @@ class CalendarShareView(HomeAssistantView):
             blocking=True,
             return_response=True,
         )
-        calendar_result: dict[str, Any] = (response or {}).get(entity_id, {})
-        events: list[dict[str, Any]] = calendar_result.get("events", [])
+        result_for_entity = (response or {}).get(entity_id)
+        if not isinstance(result_for_entity, dict):
+            return []
+        events = result_for_entity.get("events", [])
+        if not isinstance(events, list):
+            return []
         return events
 
     @staticmethod

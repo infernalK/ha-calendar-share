@@ -1,9 +1,10 @@
 """Tests for the HTTP view: token validation and response shape."""
 from __future__ import annotations
 
-from unittest.mock import AsyncMock, MagicMock
+from unittest.mock import MagicMock
 
 import pytest
+from homeassistant.core import ServiceCall, SupportsResponse
 
 from custom_components.calendar_share.const import DOMAIN
 from custom_components.calendar_share.http_view import CalendarShareView
@@ -53,8 +54,8 @@ async def test_correct_token_returns_ics(hass):
     hass.data[DOMAIN] = {
         "entry1": {"entry": _FakeEntry("calendar.foo", "correct-token")}
     }
-    hass.services.async_call = AsyncMock(
-        return_value={
+    async def fake_get_events(call: ServiceCall) -> dict:
+        return {
             "calendar.foo": {
                 "events": [
                     {
@@ -66,6 +67,12 @@ async def test_correct_token_returns_ics(hass):
                 ]
             }
         }
+
+    hass.services.async_register(
+        "calendar",
+        "get_events",
+        fake_get_events,
+        supports_response=SupportsResponse.ONLY,
     )
 
     view = CalendarShareView(hass)
