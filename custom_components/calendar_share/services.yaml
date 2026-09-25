@@ -1,0 +1,2 @@
+# Calendar Share exposes no services: it is a strictly read-only integration.
+# Feeds are configured entirely through the config flow and its options flow.

@@ -1,0 +1,36 @@
+{
+  "config": {
+    "step": {
+      "user": {
+        "title": "Ajouter un flux de partage",
+        "description": "Choisissez le calendrier à exposer sous forme de flux d'abonnement iCalendar (.ics) sans authentification.",
+        "data": {
+          "calendar_entity_id": "Calendrier"
+        }
+      },
+      "confirm": {
+        "title": "URL de partage créée",
+        "description": "Cette URL n'est affichée qu'une seule fois. Copiez-la maintenant et ajoutez-la comme abonnement dans votre application calendrier.\n\n`{url}`\n\n**Toute personne possédant cette URL peut lire les événements de ce calendrier.** Utilisez uniquement HTTPS, ne la partagez jamais sur une connexion non chiffrée."
+      }
+    },
+    "abort": {
+      "no_calendars": "Aucune entité calendrier n'a été trouvée dans Home Assistant.",
+      "already_configured": "Ce flux de partage est déjà configuré."
+    }
+  },
+  "options": {
+    "step": {
+      "init": {
+        "title": "Options du flux de partage",
+        "data": {
+          "days_ahead": "Nombre de jours à venir à inclure dans le flux",
+          "regenerate_token": "Régénérer le jeton de partage (invalide immédiatement l'URL actuelle)"
+        }
+      },
+      "show_new_token": {
+        "title": "Nouvelle URL de partage",
+        "description": "L'ancienne URL ne fonctionne plus. Cette nouvelle URL n'est affichée qu'une seule fois.\n\n`{url}`"
+      }
+    }
+  }
+}

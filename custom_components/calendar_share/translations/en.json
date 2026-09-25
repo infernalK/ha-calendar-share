@@ -1,0 +1,36 @@
+{
+  "config": {
+    "step": {
+      "user": {
+        "title": "Add a calendar share",
+        "description": "Choose the calendar to expose as an unauthenticated iCalendar (.ics) subscription feed.",
+        "data": {
+          "calendar_entity_id": "Calendar"
+        }
+      },
+      "confirm": {
+        "title": "Share URL created",
+        "description": "This URL is shown only once. Copy it now and add it as a calendar subscription in your calendar app.\n\n`{url}`\n\n**Anyone with this URL can read this calendar's events.** Only use HTTPS, never share it over an unencrypted connection."
+      }
+    },
+    "abort": {
+      "no_calendars": "No calendar entities were found in Home Assistant.",
+      "already_configured": "This calendar share is already configured."
+    }
+  },
+  "options": {
+    "step": {
+      "init": {
+        "title": "Calendar share options",
+        "data": {
+          "days_ahead": "Days ahead to include in the feed",
+          "regenerate_token": "Regenerate the share token (invalidates the current URL immediately)"
+        }
+      },
+      "show_new_token": {
+        "title": "New share URL",
+        "description": "The previous URL no longer works. This new URL is shown only once.\n\n`{url}`"
+      }
+    }
+  }
+}

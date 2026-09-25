@@ -1,0 +1,12 @@
+{
+  "domain": "calendar_share",
+  "name": "Calendar Share",
+  "codeowners": ["@infernalK"],
+  "config_flow": true,
+  "documentation": "https://github.com/infernalK/ha-calendar-share",
+  "issue_tracker": "https://github.com/infernalK/ha-calendar-share/issues",
+  "iot_class": "local_polling",
+  "integration_type": "service",
+  "requirements": ["icalendar>=5.0.0"],
+  "version": "1.0.0"
+}
