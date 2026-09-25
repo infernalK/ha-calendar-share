@@ -12,7 +12,7 @@ import hashlib
 import logging
 import secrets
 from datetime import date, datetime, timedelta
-from typing import Any
+from typing import Any, cast
 
 from aiohttp import web
 from homeassistant.components.http.view import (  # type: ignore[attr-defined]
@@ -111,7 +111,7 @@ class CalendarShareView(HomeAssistantView):
         events = result_for_entity.get("events", [])
         if not isinstance(events, list):
             return []
-        return events
+        return cast("list[dict[str, Any]]", events)
 
     @staticmethod
     def _build_ics(entity_id: str, events: list[dict[str, Any]]) -> bytes:
