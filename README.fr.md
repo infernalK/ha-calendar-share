@@ -28,8 +28,10 @@ Traitez le lien comme un mot de passe : quiconque l'a peut voir le calendrier. S
 
 ### Avec HACS (recommandé)
 
-1. Dans HACS, menu ⋮ → **Dépôts personnalisés**, ajoutez l'URL de ce dépôt avec la catégorie **Intégration**.
-2. Installez **Calendar Share** puis redémarrez Home Assistant.
+1. Dans HACS, recherchez **Calendar Share** puis cliquez sur **Télécharger**.
+2. Redémarrez Home Assistant.
+
+S'il n'apparaît pas encore, ajoutez-le comme dépôt personnalisé : menu ⋮ → **Dépôts personnalisés**, collez l'URL de ce dépôt et choisissez la catégorie **Intégration**.
 
 ### Manuellement
 

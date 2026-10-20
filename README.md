@@ -28,8 +28,10 @@ Treat the link like a password: whoever has it can see the calendar. If it leaks
 
 ### With HACS (recommended)
 
-1. In HACS, open the ⋮ menu → **Custom repositories**, add this repository's URL with the category **Integration**.
-2. Install **Calendar Share** and restart Home Assistant.
+1. In HACS, search for **Calendar Share** and click **Download**.
+2. Restart Home Assistant.
+
+If it does not show up yet, you can add it as a custom repository: ⋮ menu → **Custom repositories**, paste this repository's URL and choose the category **Integration**.
 
 ### Manually
 

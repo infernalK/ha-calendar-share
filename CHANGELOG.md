@@ -4,6 +4,11 @@ All notable changes to this project are documented in this file.
 
 ## [Unreleased]
 
+### Changed
+
+- README install section now leads with the HACS search; the custom
+  repository method is kept as a fallback.
+
 ## [1.0.3] - 2026-10-20
 
 ### Changed
