@@ -1,6 +1,6 @@
 # Calendar Share
 
-[🇬🇧 English](README.md) · 🇫🇷 Français
+[English](README.md) · **Français**
 
 **Partagez n'importe quel calendrier Home Assistant avec votre téléphone, votre famille ou vos collègues grâce à un simple lien.**
 
