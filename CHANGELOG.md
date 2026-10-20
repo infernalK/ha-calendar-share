@@ -4,6 +4,13 @@ All notable changes to this project are documented in this file.
 
 ## [Unreleased]
 
+## [1.0.3] - 2026-10-20
+
+### Changed
+
+- README rewritten for a general audience, with a French version
+  (`README.fr.md`).
+
 ## [1.0.2] - 2026-10-20
 
 ### Fixed
