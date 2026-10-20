@@ -4,6 +4,10 @@ All notable changes to this project are documented in this file.
 
 ## [Unreleased]
 
+### Changed
+
+- README: logo shown at the top (EN and FR).
+
 ## [1.0.5] - 2026-10-20
 
 ### Changed

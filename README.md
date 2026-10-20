@@ -1,3 +1,7 @@
+<p align="center">
+  <img src="https://raw.githubusercontent.com/infernalK/ha-calendar-share/main/custom_components/calendar_share/brand/logo@2x.png" alt="Calendar Share logo" width="160">
+</p>
+
 # 📅 Calendar Share
 
 [![Open your Home Assistant instance and open a repository inside the Home Assistant Community Store.](https://my.home-assistant.io/badges/hacs_repository.svg)](https://my.home-assistant.io/redirect/hacs_repository/?owner=infernalK&repository=ha-calendar-share&category=integration)
