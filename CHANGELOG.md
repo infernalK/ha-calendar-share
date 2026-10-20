@@ -7,6 +7,7 @@ All notable changes to this project are documented in this file.
 ### Changed
 
 - README header: HACS button, release and license badges, title emoji (EN and FR).
+- Added brand `logo.png` / `logo@2x.png`.
 
 ## [1.0.4] - 2026-10-20
 
