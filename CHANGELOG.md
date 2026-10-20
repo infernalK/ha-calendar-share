@@ -4,6 +4,10 @@ All notable changes to this project are documented in this file.
 
 ## [Unreleased]
 
+### Changed
+
+- README header: HACS button, release and license badges, title emoji (EN and FR).
+
 ## [1.0.4] - 2026-10-20
 
 ### Changed

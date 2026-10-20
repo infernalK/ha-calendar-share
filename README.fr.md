@@ -1,4 +1,8 @@
-# Calendar Share
+# 📅 Calendar Share
+
+[![Open your Home Assistant instance and open a repository inside the Home Assistant Community Store.](https://my.home-assistant.io/badges/hacs_repository.svg)](https://my.home-assistant.io/redirect/hacs_repository/?owner=infernalK&repository=ha-calendar-share&category=integration)
+[![GitHub release](https://img.shields.io/github/v/release/infernalK/ha-calendar-share)](https://github.com/infernalK/ha-calendar-share/releases)
+[![License](https://img.shields.io/github/license/infernalK/ha-calendar-share)](LICENSE)
 
 [English](README.md) · **Français**
 
