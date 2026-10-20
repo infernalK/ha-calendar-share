@@ -4,6 +4,8 @@ All notable changes to this project are documented in this file.
 
 ## [Unreleased]
 
+## [1.0.4] - 2026-10-20
+
 ### Changed
 
 - README install section now leads with the HACS search; the custom
