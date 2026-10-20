@@ -4,6 +4,16 @@ All notable changes to this project are documented in this file.
 
 ## [Unreleased]
 
+## [1.0.2] - 2026-10-20
+
+### Fixed
+
+- `X-WR-TIMEZONE` now uses the Home Assistant configured time zone instead of
+  a hard-coded `Europe/Paris`.
+- A percent-encoded non-ASCII token now yields a 403 instead of a 500.
+- Events missing `start` or `end` are skipped (debug-logged) instead of
+  breaking the whole feed.
+
 ## [1.0.1] - 2026-09-25
 
 ### Added

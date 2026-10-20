@@ -79,7 +79,7 @@ class CalendarShareView(HomeAssistantView):
             days_behind = entry.options.get(CONF_DAYS_BEHIND, DEFAULT_DAYS_BEHIND)
 
         events = await self._async_get_events(entity_id, days_ahead, days_behind)
-        ics_body = self._build_ics(entity_id, events)
+        ics_body = self._build_ics(entity_id, events, self._hass.config.time_zone)
 
         async_dispatcher_send(
             self._hass,
@@ -104,7 +104,10 @@ class CalendarShareView(HomeAssistantView):
                 continue
             entry: ConfigEntry = flow["entry"]
             expected_token: str = entry.data[CONF_TOKEN]
-            if secrets.compare_digest(presented_token, expected_token):
+            # Compare bytes: compare_digest raises TypeError on non-ASCII str.
+            if secrets.compare_digest(
+                presented_token.encode(), expected_token.encode()
+            ):
                 return entry
         return None
 
@@ -135,14 +138,23 @@ class CalendarShareView(HomeAssistantView):
         return cast("list[dict[str, Any]]", events)
 
     @staticmethod
-    def _build_ics(entity_id: str, events: list[dict[str, Any]]) -> bytes:
+    def _build_ics(
+        entity_id: str, events: list[dict[str, Any]], time_zone: str
+    ) -> bytes:
         calendar = Calendar()
         calendar.add("prodid", "-//Calendar Share//Home Assistant//EN")
         calendar.add("version", "2.0")
         calendar.add("calscale", "GREGORIAN")
-        calendar.add("x-wr-timezone", "Europe/Paris")
+        calendar.add("x-wr-timezone", time_zone)
 
         for event in events:
+            if "start" not in event or "end" not in event:
+                _LOGGER.debug(
+                    "Skipping event without start/end in %s: %s",
+                    entity_id,
+                    event.get("summary", ""),
+                )
+                continue
             calendar.add_component(_event_to_vevent(entity_id, event))
 
         return bytes(calendar.to_ical())

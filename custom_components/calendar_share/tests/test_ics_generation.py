@@ -4,8 +4,32 @@ from __future__ import annotations
 from custom_components.calendar_share.http_view import CalendarShareView
 
 
-def _ics_text(entity_id: str, events: list[dict]) -> str:
-    return CalendarShareView._build_ics(entity_id, events).decode("utf-8")
+def _ics_text(
+    entity_id: str, events: list[dict], time_zone: str = "Europe/Paris"
+) -> str:
+    return CalendarShareView._build_ics(entity_id, events, time_zone).decode("utf-8")
+
+
+def test_timezone_follows_configured_zone():
+    ics = _ics_text("calendar.x", [], "America/New_York")
+    assert "X-WR-TIMEZONE:America/New_York" in ics
+    assert "Europe/Paris" not in ics
+
+
+def test_events_without_start_or_end_are_skipped():
+    events = [
+        {"uid": "bad1", "summary": "No start", "end": "2026-10-05T09:00:00+02:00"},
+        {"uid": "bad2", "summary": "No end", "start": "2026-10-05T08:00:00+02:00"},
+        {
+            "uid": "ok",
+            "summary": "Good",
+            "start": "2026-10-05T08:00:00+02:00",
+            "end": "2026-10-05T09:00:00+02:00",
+        },
+    ]
+    ics = _ics_text("calendar.x", events)
+    assert ics.count("BEGIN:VEVENT") == 1
+    assert "SUMMARY:Good" in ics
 
 
 def test_simple_timed_event():
