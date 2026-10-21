@@ -49,7 +49,7 @@ Copy the `custom_components/calendar_share` folder into the `custom_components` 
 
 1. Go to **Settings → Devices & Services → Add Integration** and choose **Calendar Share**.
 2. Pick the calendar you want to share.
-3. Your link is displayed **once**. Copy it right away.
+3. Your link is displayed. Copy it (you can find it again later via the integration's **Configure** button).
 4. Subscribe to it in your calendar app:
    - **iPhone / iPad:** Settings → Calendar → Accounts → Add Account → Other → Add Subscribed Calendar.
    - **Google Calendar (on a computer):** Other calendars (+) → From URL. It then also shows on your Android phone.
@@ -67,7 +67,7 @@ You can change these at any time from the integration's **Configure** button.
 | **Full calendar** | Shares everything the calendar contains, past and future. The two settings below are then ignored. |
 | **Days ahead** | How far into the future events are shared (default: 400 days, max 10 years). |
 | **Days behind** | How far into the past events are shared (default: 400 days, max 10 years). |
-| **Regenerate token** | Creates a new link and instantly disables the old one. The new link is shown once; update your subscriptions afterwards. |
+| **Regenerate token** | Creates a new link and instantly disables the old one. The new link is shown right away; update your subscriptions afterwards. |
 
 The default window (about 13 months each way) is wide enough for most calendars, including school-year ones, so you rarely need to change anything.
 

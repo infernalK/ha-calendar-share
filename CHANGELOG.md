@@ -4,6 +4,13 @@ All notable changes to this project are documented in this file.
 
 ## [Unreleased]
 
+## [1.0.7] - 2026-10-21
+
+### Changed
+
+- The current share URL is now displayed in the integration's options
+  (**Configure**), so it can be retrieved without regenerating the token.
+
 ## [1.0.6] - 2026-10-20
 
 ### Changed

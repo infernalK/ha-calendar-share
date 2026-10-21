@@ -83,7 +83,7 @@ class CalendarShareConfigFlow(ConfigFlow, domain=DOMAIN):
     async def async_step_confirm(
         self, user_input: dict[str, Any] | None = None
     ) -> Any:
-        """Create the entry and display the share URL once."""
+        """Create the entry and display the share URL."""
         assert self._entity_id is not None
         assert self._token is not None
 
@@ -172,7 +172,14 @@ class CalendarShareOptionsFlow(OptionsFlow):
                 vol.Optional(CONF_REGENERATE_TOKEN, default=False): bool,
             }
         )
-        return self.async_show_form(step_id="init", data_schema=schema)
+        share_url = _build_share_url(
+            self.hass, self.config_entry.data[CONF_TOKEN]
+        )
+        return self.async_show_form(
+            step_id="init",
+            data_schema=schema,
+            description_placeholders={"url": share_url},
+        )
 
     async def async_step_show_new_token(
         self, user_input: dict[str, Any] | None = None

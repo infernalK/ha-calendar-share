@@ -123,6 +123,33 @@ async def test_regenerate_token_invalidates_old_token(hass, mock_calendar_state)
     assert new_token != old_token
 
 
+async def test_options_form_shows_current_share_url(hass, mock_calendar_state):
+    with patch(
+        "custom_components.calendar_share.config_flow.get_url",
+        return_value="https://ha.example.com",
+    ):
+        result = await hass.config_entries.flow.async_init(
+            DOMAIN, context={"source": config_entries.SOURCE_USER}
+        )
+        result = await hass.config_entries.flow.async_configure(
+            result["flow_id"], {CONF_CALENDAR_ENTITY_ID: mock_calendar_state}
+        )
+        result = await hass.config_entries.flow.async_configure(
+            result["flow_id"], {}
+        )
+        entry = hass.config_entries.async_entries(DOMAIN)[0]
+
+        options_result = await hass.config_entries.options.async_init(
+            entry.entry_id
+        )
+
+    assert options_result["type"] == FlowResultType.FORM
+    assert options_result["step_id"] == "init"
+    assert options_result["description_placeholders"]["url"] == (
+        f"https://ha.example.com/api/calendar_share/{entry.data[CONF_TOKEN]}"
+    )
+
+
 async def test_full_calendar_option_can_be_enabled(hass, mock_calendar_state):
     with patch(
         "custom_components.calendar_share.config_flow.get_url",

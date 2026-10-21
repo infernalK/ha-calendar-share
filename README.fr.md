@@ -49,7 +49,7 @@ Copiez le dossier `custom_components/calendar_share` dans le dossier `custom_com
 
 1. Allez dans **Paramètres → Appareils et services → Ajouter une intégration** et choisissez **Calendar Share**.
 2. Sélectionnez le calendrier à partager.
-3. Votre lien s'affiche **une seule fois**. Copiez-le immédiatement.
+3. Votre lien s'affiche. Copiez-le (vous pourrez le retrouver plus tard via le bouton **Configurer** de l'intégration).
 4. Abonnez-vous-y dans votre application de calendrier :
    - **iPhone / iPad :** Réglages → Calendrier → Comptes → Ajouter un compte → Autre → Ajouter un calendrier avec abonnement.
    - **Google Agenda (sur ordinateur) :** Autres agendas (+) → À partir de l'URL. Il apparaît ensuite aussi sur votre téléphone Android.
@@ -67,7 +67,7 @@ Modifiables à tout moment avec le bouton **Configurer** de l'intégration.
 | **Calendrier complet** | Partage tout le contenu du calendrier, passé et futur. Les deux réglages suivants sont alors ignorés. |
 | **Jours à venir** | Jusqu'où dans le futur les événements sont partagés (par défaut 400 jours, max 10 ans). |
 | **Jours passés** | Jusqu'où dans le passé les événements sont partagés (par défaut 400 jours, max 10 ans). |
-| **Régénérer le jeton** | Crée un nouveau lien et désactive aussitôt l'ancien. Le nouveau lien s'affiche une seule fois ; mettez ensuite vos abonnements à jour. |
+| **Régénérer le jeton** | Crée un nouveau lien et désactive aussitôt l'ancien. Le nouveau lien s'affiche aussitôt ; mettez ensuite vos abonnements à jour. |
 
 La période par défaut (environ 13 mois de chaque côté) suffit à la plupart des calendriers, y compris scolaires : il est rarement nécessaire de la modifier.
 
